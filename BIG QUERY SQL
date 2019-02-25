@@ -1,0 +1,83 @@
+SELECT * FROM `bigquery-public-data.census_bureau_international.age_specific_fertility_rates` LIMIT 1000
+Q 1Total number of countries in the Data
+SELECT count(distinct(country_name)) 
+FROM `bigquery-public-data.world_bank_intl_debt.international_debt`
+
+#OUTPUT: 134
+
+
+Q 2Total no. of countries in the data
+SELECT COUNT(DISTINCT(country_name)) 
+FROM `bigquery-public-data.census_bureau_international.age_specific_fertility_rates`
+
+#OUTPUT: 228
+
+
+Q3 To estimate fertility rate data in descending order
+SELECT DISTINCT(year), fertility_rate_20_24
+FROM `bigquery-public-data.census_bureau_international.age_specific_fertility_rates`
+ ORDER BY year desc 
+limit 5
+
+#OUTPUT:82.7,77.1,136.5,80.9, 60.5
+
+ 
+Q4 Extracting data for fertility_rate_20_24 of  China
+SELECT distinct(year) fertility_rate_20_24	
+FROM `bigquery-public-data.census_bureau_international.age_specific_fertility_rates`
+WHERE country_name="China" Limit 5
+
+#OUTOUT:2036,2021,2022,2023, 2024 
+
+
+Q5 Obtaining  the no. of indicators from international education for TURKEY
+SELECT* 
+FROM `bigquery-public-data.world_bank_intl_education.international_education` 
+WHERE country_code="TUR"
+
+#OUTPUT: 100
+
+
+Q6 To estimate the country with maximum value
+SELECT country_name, max(value)
+FROM `bigquery-public-data.world_bank_intl_education.international_education` 
+Group by country_name limit 5
+
+#OUTPUT:
+Angola,Turkey, Burkina Faso, Chile, Sub-Saharan Africa
+
+
+Q7 To estimate average value educational data of three countries 
+SELECT country_name, AVG(value)
+FROM `bigquery-public-data.world_bank_intl_education.international_education` 
+Group by country_name limit 3
+
+#OUTPUT:Angola-9.680362826959362E8,Turkey-4.1619149880309334E9, Burkina Faso-6.316696402955396E7
+
+
+
+
+Q8 Left Join International debt and international education data with Limit 3
+SELECT `bigquery-public-data.world_bank_intl_debt.country_summary`.country_code, `bigquery-public-data.world_bank_intl_education.international_education`.value
+FROM `bigquery-public-data.world_bank_intl_debt.country_summary`
+LEFT JOIN `bigquery-public-data.world_bank_intl_education.international_education`
+ON `bigquery-public-data.world_bank_intl_debt.country_summary`.country_code = `bigquery-public-data.world_bank_intl_education.international_education`.country_code
+
+#OUTPUT:SLB-5208.0, SLB-6496.0,SLB-4053.0
+
+
+Q9 Estimating value of  Net flow of internationally mobile students (inbound - outbound), both sexes (number) by ascending order
+SELECT * FROM `bigquery-public-data.world_bank_intl_education.international_education`
+ORDER BY value ASC limit 2
+
+#OUTPUT: China 2013 (-615748.0) 2012 (-604993.0)
+
+
+Q10 To estimate the country with minimum value
+SELECT country_name, min(value)
+FROM `bigquery-public-data.world_bank_intl_education.international_education` 
+Group by country_name limit 3
+
+#OUTPUT:Angola-(-5143.0), Turkey - (-42585.0),Burkina Faso-(-1496.0)
+
+
